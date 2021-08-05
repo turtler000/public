@@ -41,13 +41,7 @@ Spring中的Bean默认是单例模式的，框架并没有对bean进行多线程
 
 ### **Bean 的生命周期**
 
-
-
-
-
 实例化后的对象被封装在BeanWrapper对象中，紧接着，Spring 根据BeanDefinition中的信息以及通过BeanWrapper提供的设置属性的接口完成依赖注入。
-
-
 
 (1）实例化Bean :
 
