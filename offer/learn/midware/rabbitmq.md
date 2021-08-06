@@ -111,3 +111,32 @@ channel.basicConsume(QUEUE_NAME, autoAck, defaultConsumer);
 
 rabbitmq：拆分多个queue，每个queue一个consumer，就是多一些queue而已，确实是麻烦点；或者就一个queue但是对应一个consumer，然后这个consumer内部用内存队列做排队，然后分发给底层不同的worker来处理
 
+### 七、rabbitmq 架构
+
+Broker：消息队列服务进程。此进程包括两个部分：Exchange和Queue。
+
+Exchange：消息队列交换机。**按一定的规则将消息路由转发到某个队列**。
+
+Queue：消息队列，存储消息的队列。
+
+Producer：消息生产者。生产方客户端将消息同交换机路由发送到队列中。
+
+Consumer：消息消费者。消费队列中存储的消息。
+
+**消息发送到RabbitMQ后首先要经过Exchange路由才能找到对应的Queue**。**Direct Exchange**，**Fanout exchange、Topic exchange、Headers exchange**。
+
+Direct Exchange：直连，一对一
+
+fanout exchange：一个发送到交换机的消息都会被转发到与该交换机绑定的所有队列上。很像子网广播，每台子网内的主机都获得了一份复制的消息。简单点说就是发布订阅。一对多
+
+Topic exchange：通配符交换机，基于通配符*和#。
+
+`*` 符号：有且只匹配一个词。比如 `a.*`可以匹配到"a.b"、"a.c"，但是匹配不了"a.b.c"。
+
+`#` 符号：匹配一个或多个词。比如"rabbit.#"既可以匹配到"rabbit.a.b"、"rabbit.a"，也可以匹配到"rabbit.a.b.c"。
+
+Headers Exchange：在匹配请求头中所带的键值进行路由
+
+**RabbitMQ文档中有关于消息顺序保证的说明：**
+
+**“发到一个通道（channel）上的消息，用一个交换器和一个队列以及一个出口通道来传递，那么最终会按照它们发送的顺序接收到。”**
