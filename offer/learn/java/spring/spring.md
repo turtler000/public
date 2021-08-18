@@ -91,7 +91,18 @@ Spring中的Bean默认是单例模式的，框架并没有对bean进行多线程
 
 把dispacherServlet注册给tomcat,然后再转发请求给controller,再通过servlet转发给controller。
 
-### Spring-Cloud
+### 依赖注入
+
+https://juejin.cn/post/6930904292958142478#heading-5
+
+循环依赖的问题：三级缓存
+
+`singletonObjects`，一级缓存，存储的是所有创建好了的单例Bean
+
+`earlySingletonObjects`，完成实例化，但是还未进行属性注入及初始化的对象
+
+`singletonFactories`，提前暴露的一个单例工厂，二级缓存中存储的就是从这个工厂中获取到的对象
+
 
 
 
